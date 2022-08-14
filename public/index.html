@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>RSS Feed Bot</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link href="/css/style.css" rel="stylesheet">
+  <link href="/css/semantic.min.css" rel="stylesheet">
+  <script src="/js/jquery-3.1.1.min.js"></script>
+  <script src="/js/semantic.min.js"></script>
+  <script src="/js/vue.min.js"></script>
+  <script src="/js/vuex.js"></script>
+  <script src="/js/axios.min.js"></script>
+</head>
+<body>
+    <div id="app" class="ui container">
+        <app></app>
+    </div>
+    <script src="/js/app.js"></script>
+    <script id="AppTemplate" type="text/x-template">
+        <div>
+            <div class="ui masthead">
+               <div class="introduction">
+                 <h1 class="ui header">RSS-Bot</h1>
+               </div>
+            </div>
+            <appMenu></appMenu>
+            <div class="ui bottom attached segment">
+                <feedlist></feedlist>
+            </div>
+            <feedEditModal></feedEditModal>
+            <confirmation></confirmation>
+        </div>
+    </script>
+
+    <script id="MenuTemplate" type="text/x-template">
+        <div class="ui top attached menu">
+            <div class="ui buttons">
+              <button class="ui basic button" @click="addFeed()">
+                <i class="icon plus"></i> 피드추가
+              </button>
+            </div>
+        </div>
+    </script>
+
+    <script id="FeedListTemplate" type="text/x-template">
+        <div>
+            <table class="ui celled table">
+                <thead>
+                    <th>피드명</th>
+                    <th>RSS URL</th>
+                    <th>태그</th>
+                    <th>액션</th>
+                </thead>
+                <feed v-for="item in feeds" :key="item.id" :feed="item"></feed>
+            </table>
+        </div>
+    </script>
+
+    <script id="FeedTemplate" type="text/x-template">
+        <tr>
+            <td>{{feed.feedName}}</td>
+            <td>{{feed.url}}</td>
+            <td>
+                <a class="ui label" v-for="(tag, index) in feed.tags" :key="index">{{tag}}</a>
+            </td>
+            <td>
+                <div class="ui icon buttons">
+                    <button class="ui button" @click="editFeed()">
+                      <i class="icon edit"></i>
+                    </button>
+                    <button class="ui button" @click="deleteFeed()">
+                      <i class="icon trash"></i>
+                    </button>
+                </div>
+            </td>
+        </tr>
+    </script>
+
+    <script id="FeedEditModalTemplate" type="text/x-template">
+        <div class="ui modal" ref="modal">
+            <div v-if="isInsert" class="header">피드 추가</div>
+            <div v-if="!isInsert" class="header">피드 수정</div>
+            <div class="content">
+                <form class="ui form">
+                  <div class="field">
+                    <label>피드명</label>
+                    <input type="text" v-model="feedName">
+                  </div>
+                  <div class="field">
+                    <label>RSS URL</label>
+                    <input :disabled="!isInsert" type="text" v-model="url">
+                  </div>
+                  <div class="field">
+                    <label>채널ID</label>
+                    <input type="text" v-model="channelId">
+                  </div>
+                  <div class="field">
+                    <label>태그</label>
+                    <input type="text" v-model="tagText">
+                  </div>
+                  <div class="field">
+                    <div v-for="(tag, index) in tags" class="ui label" :key="index">
+                        {{tag}}
+                    </div>
+                  </div>
+             </form>
+          </div>
+          <div class="actions">
+            <div class="ui positive button">
+              확인
+            </div>
+            <div class="ui deny button">
+              취소
+            </div>
+          </div>
+        </div>
+    </script>
+
+    <script id="ConfirmTemplate" type="text/x-template">
+        <div class="ui mini modal" ref="modal">
+          <div class="header">{{header}}</div>
+          <div class="content">
+            {{content}}
+          </div>
+          <div class="actions">
+            <div class="ui positive button">
+              확인
+            </div>
+            <div class="ui deny button">
+              취소
+            </div>
+          </div>
+        </div>
+    </script>
+
+    <script>
+        var app = new Vue({
+          el: '#app',
+          store
+        })
+    </script>
+</body>

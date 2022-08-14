@@ -1,0 +1,14 @@
+{
+  "rss":{
+     "skipFirstLoad":"SKIP_FIRST_LOAD"
+  },
+  "database": {
+    "url": "MONGO_URL",
+    "database": "MONGO_DATABASE"
+  },
+  "coco":{
+      "url":"COCO_URL",
+      "token":"COCO_TOKEN",
+      "channelId":"COCO_CHANNEL"
+  }
+}

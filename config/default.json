@@ -1,0 +1,14 @@
+{
+  "rss":{
+     "skipFirstLoad":false
+  },
+  "database": {
+    "url": "mongodb://root:example@localhost:27017",
+    "database": "rss-bot"
+  },
+  "coco":{
+      "url":"",
+      "token":"",
+      "channelId":""
+  }
+}
