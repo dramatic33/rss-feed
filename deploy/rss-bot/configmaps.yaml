@@ -1,0 +1,10 @@
+apiVersion: v1
+data:
+  SKIP_FIRST_LOAD: "true"
+  MONGO_DATABASE: rss-bot
+  COCO_URL: 
+  COCO_CHANNEL: 
+kind: ConfigMap
+metadata:
+  name: rss-bot-config
+  namespace: real

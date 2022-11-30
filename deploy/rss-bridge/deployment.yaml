@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: rss-bridge
+  namespace: real
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: rss-bridge
+  template:
+    metadata:
+      labels:
+        app: rss-bridge
+    spec:
+      containers:
+      - image: rssbridge/rss-bridge:latest
+        name: rss-bridge
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 80
+          name: 80tcp01
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /app/bridges
+          name: bridges
+        - mountPath: /app/whitelist.txt
+          name: whitelist
+      volumes:
+      - hostPath:
+          path: 
+          type: DirectoryOrCreate
+        name: bridges
+      - hostPath:
+          path: 
+          type: File
+        name: whitelist

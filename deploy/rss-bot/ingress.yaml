@@ -1,0 +1,16 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: rss-bot-ingress
+  namespace: real
+spec:
+  rules:
+  - host: rss-bot.drama.io
+    http:
+      paths:
+      - backend:
+          service:
+            name: rss-bot
+            port:
+              number: 3000
+        pathType: ImplementationSpecific

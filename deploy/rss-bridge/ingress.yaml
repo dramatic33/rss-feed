@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: rss-bridge-ingress
+  namespace: real
+spec:
+  rules:
+  - host: rss-bridge.drama.io
+    http:
+      paths:
+      - backend:
+          service:
+            name: rss-bridge
+            port:
+              number: 8080
+        pathType: Prefix
+        path: /
